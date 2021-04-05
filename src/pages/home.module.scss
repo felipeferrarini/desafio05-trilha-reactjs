@@ -7,6 +7,11 @@
 
   a {
     display: block;
+    transition: all 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
 
     & + a {
       padding-top: 3.125rem;
@@ -53,4 +58,34 @@
   color: var(--highlight);
   font-size: 1.125rem;
   font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
+
+.exitPreview {
+  margin-top: 5.5rem;
+  height: 3.625rem;
+  width: 100%;
+  background-color: var(--heading);
+  border-radius: 4px;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  a {
+    text-align: center;
+    color: var(--background);
+    font-weight: 600;
+    font-size: 1.125rem;
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

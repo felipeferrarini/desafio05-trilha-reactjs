@@ -13,7 +13,7 @@
     line-height: 3.75rem;
   }
 
-  div {
+  & > div {
     margin-top: 1.5rem;
     display: flex;
     align-items: center;
@@ -32,6 +32,15 @@
       }
     }
   }
+
+  & > p {
+    font-style: italic;
+    font-size: 0.875rem;
+    color: var(--info);
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
 }
 
 .postContent {
@@ -49,8 +58,71 @@
   }
 }
 
+.postsNavigation {
+  border-top: 1px solid var(--body);
+  margin-top: 3.75rem;
+  padding-top: 3.75rem;
+  padding-bottom: 3.75rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  a {
+    text-align: left;
+    line-height: 1.4rem;
+    max-width: 40%;
+
+    display: block;
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    &:nth-child(2) {
+      text-align: right;
+    }
+
+    p {
+      font-size: 1.125rem;
+    }
+
+    span {
+      color: var(--highlight);
+      font-weight: 600;
+    }
+  }
+}
+
 .postLoading {
   h5 {
     font-size: 2rem;
+  }
+}
+
+.exitPreview {
+  margin-top: 5.5rem;
+  margin-bottom: 2rem;
+  height: 3.625rem;
+  width: 100%;
+  background-color: var(--heading);
+  border-radius: 4px;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  a {
+    text-align: center;
+    color: var(--background);
+    font-weight: 600;
+    font-size: 1.125rem;
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -6,3 +6,8 @@ export const formatDate = (date: Date): string => {
     locale: ptBR,
   });
 };
+export const formatLongDate = (date: Date): string => {
+  return format(date, "dd MMM yyyy, à's 'HH:mm", {
+    locale: ptBR,
+  });
+};

@@ -28,27 +28,21 @@ interface PostPagination {
 
 interface HomeProps {
   postsPagination: PostPagination;
+  preview: boolean;
 }
 
-export default function Home({ postsPagination }: HomeProps): JSX.Element {
+export default function Home({
+  postsPagination,
+  preview,
+}: HomeProps): JSX.Element {
   const [posts, setPosts] = useState<Post[]>(postsPagination.results);
   const [nextPage, setNextPage] = useState(postsPagination.next_page);
 
   const fetchMorePosts = async (): Promise<void> => {
     const postsData = await fetch(nextPage).then(res => res.json());
 
-    const postsFormated: Post[] = postsData.results.map(post => ({
-      uid: post.uid,
-      first_publication_date: post.first_publication_date,
-      data: {
-        title: post.data.title,
-        subtitle: post.data.subtitle,
-        author: post.data.author,
-      },
-    }));
-
     setNextPage(postsData.next_page);
-    setPosts(posts.concat(postsFormated));
+    setPosts(posts.concat(postsData.results));
   };
 
   return (
@@ -89,12 +83,23 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
             Carregar mais posts
           </button>
         )}
+
+        {preview && (
+          <aside className={styles.exitPreview}>
+            <Link href="/api/exit-preview">
+              <a>Sair do modo Preview</a>
+            </Link>
+          </aside>
+        )}
       </main>
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({
+  preview = false,
+  previewData,
+}) => {
   const prismic = getPrismicClient();
   const postsResponse = await prismic.query(
     [Prismic.predicates.at('document.type', 'posts')],
@@ -107,25 +112,16 @@ export const getStaticProps: GetStaticProps = async () => {
         'publication.content',
       ],
       pageSize: 1,
+      ref: previewData?.ref ?? null,
     }
   );
 
-  const posts = postsResponse.results.map(post => ({
-    uid: post.uid,
-    first_publication_date: post.first_publication_date,
-    data: {
-      title: post.data.title,
-      subtitle: post.data.subtitle,
-      author: post.data.author,
-    },
-  }));
-
   const postsPagination = {
     next_page: postsResponse.next_page,
-    results: posts,
+    results: postsResponse.results,
   };
 
   return {
-    props: { postsPagination },
+    props: { postsPagination, preview },
   };
 };
